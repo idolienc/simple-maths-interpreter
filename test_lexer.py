@@ -1,19 +1,19 @@
 from lexer import Lexer
 import pytest
 
-def test_one():
+def test_basic_equation():
     assert Lexer("2+2") == ["2", "+", "2"]
 
-def test_two():
+def test_decimals():
     assert Lexer("2.2+2") == ["2.2", "+", "2"]
 
-def test_three():
+def test_whitespace():
     assert Lexer("2 + 2") == ["2", "+", "2"]
 
-def test_four():
+def test_operators():
     assert Lexer("2-2*2/2") == ["2", "-", "2", "*", "2", "/", "2"]
 
-def test_bad_input():
+def test_multi_dps():
     with pytest.raises(TypeError):
         assert Lexer("2.2.2+2")
 

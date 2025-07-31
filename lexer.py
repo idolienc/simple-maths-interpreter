@@ -6,19 +6,13 @@ def Lexer(equation):
     operator_count = 0
 
     def tokenize_operators():
-        nonlocal store, operator_count, decimal_count
+        nonlocal store, decimal_count
         tokens.append(store)
-        operator_count += 1
-        if operator_count > 1:
-            raise TypeError(f"Illegal characters entered, 2 or more operators are adjacent")
-        else:
-            tokens.append(character)
-            store = ""
-            operator_count = 0
-            decimal_count = 0  
+        tokens.append(character)
+        store = ""
+        decimal_count = 0
 
     for character in equation:
-
         if character in DIGITS:
             store += character
 
@@ -31,16 +25,9 @@ def Lexer(equation):
         elif character == " ":
             pass
         
-        elif character == "+":
-            tokenize_operators()
-
-        elif character == "-":
-            tokenize_operators()
-
-        elif character == "*":
-            tokenize_operators()
-
-        elif character == "/":
+        elif character in "+-*/":
+            if store == "":
+                raise TypeError("Illegal characters entered, 2 or more operators are adjacent")
             tokenize_operators()
 
     if store:
