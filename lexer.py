@@ -3,7 +3,6 @@ def Lexer(equation):
     DIGITS = "0123456789"
     store = ""
     decimal_count = 0
-    operator_count = 0
 
     def tokenize_operators():
         nonlocal store, decimal_count

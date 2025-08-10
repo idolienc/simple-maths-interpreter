@@ -2,7 +2,7 @@ from lexer import Lexer
 import pytest
 
 def test_basic_equation():
-    assert Lexer("2+2") == ["2", "+", "2"]
+    assert Lexer("2 + 2") == ["2", "+", "2"]
 
 def test_decimals():
     assert Lexer("2.2+2") == ["2.2", "+", "2"]
