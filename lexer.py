@@ -19,14 +19,14 @@ def Lexer(equation):
             store += character
             decimal_count += 1
             if decimal_count > 1:
-                raise TypeError(f"Illegal characters entered, a value contains 2 or more decimal points")
+                raise SyntaxError(f"Illegal characters entered, a value contains 2 or more decimal points")
             
         elif character == " ":
             pass
         
         elif character in "+-*/":
             if store == "":
-                raise TypeError("Illegal characters entered, 2 or more operators are adjacent")
+                raise SyntaxError("Illegal characters entered, 2 or more operators are adjacent")
             tokenize_operators()
 
     if store:

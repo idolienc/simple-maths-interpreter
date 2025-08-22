@@ -1,1 +1,1 @@
-# simple-parser
+# simple-maths-interpreter

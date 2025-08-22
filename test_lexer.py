@@ -1,22 +1,24 @@
 from lexer import Lexer
 import pytest
 
-def test_basic_equation():
-    assert Lexer("2 + 2") == ["2", "+", "2"]
-
-def test_decimals():
-    assert Lexer("2.2+2") == ["2.2", "+", "2"]
-
-def test_whitespace():
-    assert Lexer("2 + 2") == ["2", "+", "2"]
-
-def test_operators():
-    assert Lexer("2-2*2/2") == ["2", "-", "2", "*", "2", "/", "2"]
-
-def test_multi_dps():
-    with pytest.raises(TypeError):
-        assert Lexer("2.2.2+2")
-
-def test_multi_operators():
-    with pytest.raises(TypeError):
-        assert Lexer("2++2+2")
+@pytest.mark.parametrize(
+        "equation, tokens",
+        [
+            ("2 + 2", ["2", "+", "2"]),
+            ("2.2 + 2", ["2.2", "+", "2"]),
+            ("2-2*2/2", ["2", "-", "2", "*", "2", "/", "2"])
+        ]
+)
+def test_basic_equation(equation, tokens):
+    assert Lexer(equation) == tokens
+    
+@pytest.mark.parametrize(
+    "equation, error",
+    [
+        ("2.2.2+2", SyntaxError),
+        ("2++2+2", SyntaxError),
+    ]
+)
+def test_errors(equation, error):
+    with pytest.raises(error):
+        assert Lexer(equation)
