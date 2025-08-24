@@ -1,4 +1,4 @@
-from lexer import Lexer
+from lexer import lex
 import pytest
 
 @pytest.mark.parametrize(
@@ -10,7 +10,7 @@ import pytest
         ]
 )
 def test_basic_equation(equation, tokens):
-    assert Lexer(equation) == tokens
+    assert lex(equation) == tokens
     
 @pytest.mark.parametrize(
     "equation, error",
@@ -21,4 +21,4 @@ def test_basic_equation(equation, tokens):
 )
 def test_errors(equation, error):
     with pytest.raises(error):
-        assert Lexer(equation)
+        assert lex(equation)

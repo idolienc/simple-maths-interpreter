@@ -1,4 +1,4 @@
-from lexer import Lexer
+from lexer import lex
 
 equation = input("Equation > ")
-Lexer(equation)
+lex(equation)

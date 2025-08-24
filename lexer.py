@@ -1,15 +1,17 @@
-def Lexer(equation):
+def lex(equation):
     tokens = []
     DIGITS = "0123456789"
     store = ""
     decimal_count = 0
 
-    def tokenize_operators():
+    def flush_store():
         nonlocal store, decimal_count
-        tokens.append(store)
-        tokens.append(character)
-        store = ""
-        decimal_count = 0
+        if store:
+            tokens.append(store)
+            store = ""
+            decimal_count = 0
+
+    equation = equation.strip()
 
     for character in equation:
         if character in DIGITS:
@@ -19,17 +21,19 @@ def Lexer(equation):
             store += character
             decimal_count += 1
             if decimal_count > 1:
-                raise SyntaxError(f"Illegal characters entered, a value contains 2 or more decimal points")
-            
+                raise SyntaxError("Illegal characters entered, a value contains 2 or more decimal points")
+
         elif character == " ":
-            pass
-        
+            flush_store()
+
         elif character in "+-*/":
-            if store == "":
+            if not store and (not tokens or tokens[-1] in "+-*/"):
                 raise SyntaxError("Illegal characters entered, 2 or more operators are adjacent")
-            tokenize_operators()
+            flush_store()
+            tokens.append(character)
 
-    if store:
-        tokens.append(store)
+        else:
+            raise SyntaxError(f"Illegal character: {character}")
 
+    flush_store()
     return tokens
